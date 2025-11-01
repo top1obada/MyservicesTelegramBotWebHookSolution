@@ -1,0 +1,19 @@
+# استخدم صورة .NET الرسمية للبناء
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /app
+
+# انسخ ملفات المشروع
+COPY . ./
+
+# استرجع الحزم وبنِ المشروع
+RUN dotnet restore
+RUN dotnet publish -c Release -o out
+
+# استخدم صورة تشغيل خفيفة
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+
+COPY --from=build /app/out .
+
+# شغل التطبيق
+ENTRYPOINT ["dotnet", "MyServicesTelegramBotWebHook.dll"]

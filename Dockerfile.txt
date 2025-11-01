@@ -1,0 +1,27 @@
+# Stage 1: Build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /app
+
+# Copy solution and project files
+COPY *.sln .
+COPY MyServicesTelegramBotWebHook/*.csproj ./MyServicesTelegramBotWebHook/
+COPY MyServicesTelegramBotApiConnect/*.csproj ./MyServicesTelegramBotApiConnect/
+COPY MyServicesTelegramBotDTO/*.csproj ./MyServicesTelegramBotDTO/
+COPY MyServiceTelegramBotScreens/*.csproj ./MyServiceTelegramBotScreens/
+
+# Restore dependencies
+RUN dotnet restore
+
+# Copy all source code
+COPY . .
+
+# Publish the app
+RUN dotnet publish -c Release -o out
+
+# Stage 2: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /app/out .
+
+# Set entry point
+ENTRYPOINT ["dotnet", "MyServicesTelegramBotWebHook.dll"]

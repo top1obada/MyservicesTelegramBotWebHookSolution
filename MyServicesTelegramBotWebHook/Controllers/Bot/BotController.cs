@@ -14,7 +14,7 @@ namespace MyServicesTelegramBotWebHook.Controllers.Bot
 
         public BotController()
         {
-            _TelegramBot = new clsTelegramBot("8435433205:AAEEtB_s7M2--vDlOFhpphyz3JSL9npg3OM");
+            _TelegramBot = new clsTelegramBot("your telegram bot here");
         }
 
         [HttpPost]

@@ -12,7 +12,7 @@ namespace MyServicesTelegramBotApiConnect.Setting
 
         public static HttpClient Client =
             new HttpClient()
-            { BaseAddress = new Uri("http://myserviceapi.runasp.net/api/") };
+            { BaseAddress = new Uri("your route here") };
 
 
 
